@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/espnet_model_zoo-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/espnet_model_zoo-{{ version }}.tar.gz
   sha256: 61d88a1898d7d6bfebeb51100f194fa7fc9b68f959913255ee5ccf68090465b0
 
 build:
@@ -16,15 +16,15 @@ build:
     - espnet_model_zoo_query = espnet_model_zoo.downloader:cmd_query
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pytest-runner
     - pip
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - pandas
     - requests
     - tqdm
@@ -43,6 +43,7 @@ test:
     - espnet_model_zoo_query --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: http://github.com/espnet/espnet_model_zoo
